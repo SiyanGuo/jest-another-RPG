@@ -2,6 +2,30 @@ const Potion = require ('../lib/Potion');
 jest.mock('../lib/Potion');
 const Player = require ('../lib/Player');
 
+test('uses a potion from inventory', ()=>{
+    const player = new Player ('Dave');
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
+    player.usePotion(1);
+    expect(player.inventory.length).toBeLessThan(oldCount);
+});
+
+
+test('add a potion to the inventory', ()=>{
+    const player = new Player ('Dave');
+    const oldCount = player.inventory.length;
+    player.addPotion(new Potion());
+    expect(player.inventory.length).toBeGreaterThan(oldCount);
+})
+
+test("gets player's attach value", ()=>{
+    const player = new Player ('Dave');
+    player.strength =10;
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+});
+
+
 test("subtracts from player's health", ()=>{
     const player = new Player('Dave');
     const oldHealth = player.health;
